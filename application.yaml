@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 'argocd-vault-plugin-demo'
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/georgevazj/argocd-vault-plugin-demo.git'
+    path: .
+    targetRevision: main  
+    plugin:
+      name: argocd-vault-plugin
+      env:
+        - name: AVP_K8S_ROLE
+          value: vplugin
+        - name: AVP_TYPE
+          value: vault
+        - name: VAULT_ADDR
+          value: 'http://172.30.137.242:8200'
+        - name: AVP_AUTH_TYPE
+          value: k8s
+  destination:
+    server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    automated:
+        prune: true
+        selfHeal: true

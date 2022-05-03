@@ -1,8 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
-  name: argocd-vault
-  namespace: argocd-vault
+  name: openshift-gitops
+  namespace: openshift-gitops
 spec:
   server:
     autoscale:
@@ -36,7 +36,9 @@ spec:
     route:
       enabled: false
   initialSSHKnownHosts: {}
-  rbac: {}
+  rbac:
+    policy: g, system:cluster-admins, role:admin
+    scopes: '[groups]'
   repo:
     image: docker.io/georgevazj/argovault
     mountsatoken: true
@@ -48,7 +50,7 @@ spec:
         cpu: 250m
         memory: 256Mi
     serviceaccount: vplugin
-    version: v1.0
+    version: v1.1
   dex:
     openShiftOAuth: true
     resources:
@@ -58,7 +60,7 @@ spec:
       requests:
         cpu: 250m
         memory: 128Mi
-  version: v1.0
+  version: v1.1
   ha:
     enabled: false
     resources:
@@ -93,3 +95,11 @@ spec:
       requests:
         cpu: 250m
         memory: 1Gi
+  applicationSet:
+      resources:
+        limits:
+          cpu: "2"
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 512Mi

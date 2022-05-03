@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: GRPC
+  name: argocd-server-grpc-ingress
+  namespace: argocd
+spec:
+  rules:
+  - host: grpc.argocd.sanacloud.easycloudpocs.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: argocd-server
+            port:
+              number: 443
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - grpc.argocd.sanacloud.easycloudpocs.com
+    secretName: argocd-tls

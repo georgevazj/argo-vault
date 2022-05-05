@@ -86,6 +86,19 @@ spec:
       generate:
         command: ["argocd-vault-plugin"]
         args: ["generate", "./"]
+  # configManagementPlugins: |
+  #   - name: argocd-vault-plugin
+  #     generate:
+  #       command: ["argocd-vault-plugin"]
+  #       args: ["-s", "argocd-vault-plugin-credentials", "generate", "./"]
+  #   - name: argocd-vault-plugin-helm
+  #     generate:
+  #       command: ["sh", "-c"]
+  #       args: ["helm template . > all.yaml && argocd-vault-plugin -s argocd-vault-plugin-credentials generate all.yaml"]
+  #   - name: argocd-vault-plugin-kustomize
+  #     generate:
+  #       command: ["sh", "-c"]
+  #       args: ["kustomize build . > all.yaml && argocd-vault-plugin -s argocd-vault-plugin-credentials generate all.yaml"]
   controller:
     processors: {}
     resources:
